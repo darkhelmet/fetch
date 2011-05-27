@@ -1,0 +1,15 @@
+h1. fetch
+
+h2. What is it?
+
+fetch is a full text search engine and server written in "go":http://golang.org/
+
+h2. Quick start
+
+TODO
+
+h2. License and Authors
+
+fetch is licensed under the terms of the Apache License, Version 2.0. See "LICENSE":https://github.com/darkhelmet/fetch/blob/master/LICENSE for details.
+
+fetch was created by Daniel Huckstep. Type `git shortlog -s` for a full list of contributors.
