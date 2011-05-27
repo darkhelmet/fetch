@@ -12,4 +12,4 @@ h2. License and Authors
 
 fetch is licensed under the terms of the Apache License, Version 2.0. See "LICENSE":https://github.com/darkhelmet/fetch/blob/master/LICENSE for details.
 
-fetch was created by Daniel Huckstep. Type `git shortlog -s` for a full list of contributors.
+fetch was created by Daniel Huckstep. Type @git shortlog -s@ for a full list of contributors.
