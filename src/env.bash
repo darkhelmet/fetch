@@ -1,0 +1,7 @@
+REQS=""
+
+PKGS=""
+
+CMDS="
+  fetchd
+"
