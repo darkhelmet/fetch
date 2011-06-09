@@ -4,6 +4,30 @@ h2. What is it?
 
 fetch is a full text search engine and server written in "go":http://golang.org/
 
+h2. How?
+
+bc. POST '{ "title": "My Blog Post", "body": "Ruby is the bomb..." }' /blog/posts/5 (/:index/:scope/:id)
+
+h3. Pipeline
+
+JSON parts -> Tokenizer -> Analyzer -> Storage
+
+h3. Tokenzier
+
+bc. String -> whitespace -> TokenList
+
+h3. Analyzer
+
+Tokens have a type/flag/something and analyzers only work on certain filters (don't bother stemming emails, for example)
+
+bc. TokenList -> ascii? -> strip -> email -> lowercase -> stopword -> stemming -> ngram -> TokenList
+
+h3. Storage
+
+bc.. storage.Index(index, scope, id, field, tokens)
+
+storage.Search(index, scope, query) # -> List of ids
+
 h2. Quick start
 
 TODO
