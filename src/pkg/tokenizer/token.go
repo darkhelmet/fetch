@@ -1,9 +1,5 @@
 package tokenizer
 
-import (
-    // "github.com/darkhelmet/seq"
-)
-
 type Token struct {
     // Backing string
     backing string
@@ -26,6 +22,7 @@ func NewTokenChan(strs []string) TokenChan {
         for _, s := range(strs) {
             tc <- NewToken(s)
         }
+        close(tc)
     }()
     return tc
 }

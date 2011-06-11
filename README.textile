@@ -14,13 +14,13 @@ JSON parts -> Tokenizer -> Analyzer -> Storage
 
 h3. Tokenzier
 
-bc. String -> whitespace -> TokenList
+bc. String -> TokenChan
 
 h3. Analyzer
 
 Tokens have a type/flag/something and analyzers only work on certain filters (don't bother stemming emails, for example)
 
-bc. TokenList -> ascii? -> strip -> email -> lowercase -> stopword -> stemming -> ngram -> TokenList
+bc. TokenChan -> invalid characters -> ascii? -> strip -> email -> lowercase -> stopword -> stemming -> ngram -> TokenChan
 
 h3. Storage
 

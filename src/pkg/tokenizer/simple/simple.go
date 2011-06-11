@@ -11,6 +11,6 @@ func (st *SimpleTokenizer) Tokenize(input string) tokenizer.TokenChan {
     return tokenizer.NewTokenChan(strings.Fields(input))
 }
 
-func New() *SimpleTokenizer {
-    return &SimpleTokenizer{}
+func Build() *SimpleTokenizer {
+    return new(SimpleTokenizer)
 }

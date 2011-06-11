@@ -1,5 +1,6 @@
 PKG_REQS="
-  github.com/darkhelmet/seq
+  tideland-cgl.googlecode.com/hg
+  tideland-rdc.googlecode.com/hg
 "
 
 PKGS="
@@ -7,6 +8,7 @@ PKGS="
   tokenizer/simple
   filter
   filter/ascii
+  filter/punctuation
   storage
   storage/redis
   fetch
