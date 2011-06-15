@@ -1,12 +1,12 @@
 package fetch
 
 import (
-    // "fmt"
     "fetch/filter"
     "fetch/filter/ascii"
     "fetch/filter/punctuation"
     "fetch/filter/lowercase"
     "fetch/filter/superstrip"
+    "fetch/filter/stopword"
     "fetch/tokenizer"
     "fetch/tokenizer/simple"
     "fetch/storage"
