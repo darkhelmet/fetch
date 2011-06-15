@@ -12,7 +12,10 @@ func BuildFilter(in tokenizer.TokenChan, f func (t *tokenizer.Token) *tokenizer.
     out := make(tokenizer.TokenChan, 10)
     go func() {
         for token := range(in) {
-            out <- f(token)
+            nt := f(token)
+            if nt != nil {
+                out <- nt
+            }
         }
         close(out)
     }()
