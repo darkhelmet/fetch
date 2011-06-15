@@ -11,6 +11,7 @@ PKGS="
   filter/punctuation
   filter/lowercase
   filter/superstrip
+  filter/stopword
   storage
   storage/redis
   fetch

@@ -19,7 +19,7 @@ type Engine struct {
 
 func buildChainAndTokenize(text string) tokenizer.TokenChan {
     st := simple.Build()
-    start, end := buildFilterChain("superstrip")
+    start, end := buildFilterChain("superstrip", "stopword")
     go func() {
        for it := range(st.Tokenize(text)) {
            start <- it
