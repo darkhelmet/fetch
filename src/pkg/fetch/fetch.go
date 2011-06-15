@@ -17,25 +17,16 @@ type Engine struct {
     storage storage.Engine
 }
 
-func (e *Engine) Index(index, scope, id string, doc map[string]interface{}) {
+func buildChainAndTokenize(text string) tokenizer.TokenChan {
     st := simple.Build()
-    for field, v := range(doc) {
-        text := v.(string)
-        start, end := buildFilterChain("superstrip")
-        go func() {
-           for it := range(st.Tokenize(text)) {
-               start <- it
-           }
-           close(start)
-        }()
-        go e.storage.Store(index, scope, id, field, end)
-    }
-}
-
-func (e *Engine) Search(query string) []string {
-    // TODO: Implement
-    d := []string{query}
-    return d
+    start, end := buildFilterChain("superstrip")
+    go func() {
+       for it := range(st.Tokenize(text)) {
+           start <- it
+       }
+       close(start)
+    }()
+    return end
 }
 
 func buildFilterFromName(name string) filter.Filter {
@@ -44,6 +35,7 @@ func buildFilterFromName(name string) filter.Filter {
     case "punctuation": return punctuation.Build()
     case "lowercase": return lowercase.Build()
     case "superstrip": return superstrip.Build()
+    case "stopword": return stopword.Build()
     }
     panic("Invalid filter")
 }
@@ -56,6 +48,22 @@ func buildFilterChain(names... string) (in, out tokenizer.TokenChan) {
         out = buildFilterFromName(name).Process(out)
     }
     return in, out
+}
+
+func (e *Engine) Index(index, scope, id string, doc map[string]interface{}) {
+    for field, v := range(doc) {
+        text := v.(string)
+        end := buildChainAndTokenize(text)
+        go e.storage.Store(index, scope, id, field, end)
+    }
+}
+
+func (e *Engine) SearchField(index, scope, field, query string) chan string {
+    return e.storage.SearchField(index, scope, field, buildChainAndTokenize(query))
+}
+
+func (e *Engine) SearchScope(index, scope, query string) chan string {
+    return e.storage.SearchScope(index, scope, buildChainAndTokenize(query))
 }
 
 func Build(engine string) *Engine {
