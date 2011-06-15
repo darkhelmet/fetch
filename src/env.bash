@@ -9,6 +9,8 @@ PKGS="
   filter
   filter/ascii
   filter/punctuation
+  filter/lowercase
+  filter/superstrip
   storage
   storage/redis
   fetch

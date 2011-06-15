@@ -5,6 +5,8 @@ import (
     "fetch/filter"
     "fetch/filter/ascii"
     "fetch/filter/punctuation"
+    "fetch/filter/lowercase"
+    "fetch/filter/superstrip"
     "fetch/tokenizer"
     "fetch/tokenizer/simple"
     "fetch/storage"
@@ -19,7 +21,7 @@ func (e *Engine) Index(index, scope, id string, doc map[string]interface{}) {
     st := simple.Build()
     for field, v := range(doc) {
         text := v.(string)
-        start, end := buildFilterChain("ascii", "punctuation")
+        start, end := buildFilterChain("superstrip")
         go func() {
            for it := range(st.Tokenize(text)) {
                start <- it
@@ -40,6 +42,8 @@ func buildFilterFromName(name string) filter.Filter {
     switch name {
     case "ascii": return ascii.Build()
     case "punctuation": return punctuation.Build()
+    case "lowercase": return lowercase.Build()
+    case "superstrip": return superstrip.Build()
     }
     panic("Invalid filter")
 }
