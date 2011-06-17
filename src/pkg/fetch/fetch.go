@@ -7,6 +7,7 @@ import (
     "fetch/filter/lowercase"
     "fetch/filter/superstrip"
     "fetch/filter/stopword"
+    "fetch/filter/stemmer"
     "fetch/tokenizer"
     "fetch/tokenizer/simple"
     "fetch/storage"
@@ -19,7 +20,7 @@ type Engine struct {
 
 func buildChainAndTokenize(text string) tokenizer.TokenChan {
     st := simple.Build()
-    start, end := buildFilterChain("superstrip", "stopword")
+    start, end := buildFilterChain("superstrip", "stopword", "stemmer")
     go func() {
        for it := range(st.Tokenize(text)) {
            start <- it
@@ -36,6 +37,7 @@ func buildFilterFromName(name string) filter.Filter {
     case "lowercase": return lowercase.Build()
     case "superstrip": return superstrip.Build()
     case "stopword": return stopword.Build()
+    case "stemmer": return stemmer.Build()
     }
     panic("Invalid filter")
 }

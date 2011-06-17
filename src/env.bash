@@ -12,6 +12,7 @@ PKGS="
   filter/lowercase
   filter/superstrip
   filter/stopword
+  filter/stemmer
   storage
   storage/redis
   fetch
