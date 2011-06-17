@@ -9,9 +9,9 @@ import (
 type Lowercase struct {}
 
 func (a *Lowercase) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.BuildFilter(in, func (t *tokenizer.Token) *tokenizer.Token {
+    return filter.BuildFilter(in, func(t *tokenizer.Token) *tokenizer.Token {
         return tokenizer.NewToken(strings.ToLower(t.Backing()))
-    })
+    }, func() {})
 }
 
 func Build() *Lowercase {

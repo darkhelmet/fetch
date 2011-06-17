@@ -4,11 +4,14 @@ import (
     "fetch/tokenizer"
 )
 
+type FilterFunc func (t *tokenizer.Token) *tokenizer.Token
+type CleanupFunc func ()
+
 type Filter interface {
     Process(in tokenizer.TokenChan) tokenizer.TokenChan
 }
 
-func BuildFilter(in tokenizer.TokenChan, f func (t *tokenizer.Token) *tokenizer.Token) tokenizer.TokenChan {
+func BuildFilter(in tokenizer.TokenChan, f FilterFunc, cleanup CleanupFunc) tokenizer.TokenChan {
     out := make(tokenizer.TokenChan, 10)
     go func() {
         for token := range(in) {
@@ -18,6 +21,7 @@ func BuildFilter(in tokenizer.TokenChan, f func (t *tokenizer.Token) *tokenizer.
             }
         }
         close(out)
+        cleanup()
     }()
     return out
 }
