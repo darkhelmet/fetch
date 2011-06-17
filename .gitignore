@@ -1,3 +1,6 @@
 src/cmd/fetchd/fetchd
 *.6
 *.a
+*.o
+_obj/
+_cgo*
