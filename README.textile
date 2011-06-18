@@ -18,9 +18,9 @@ bc. String -> TokenChan
 
 h3. Analyzer
 
-Tokens have a type/flag/something and analyzers only work on certain filters (don't bother stemming emails, for example)
+Tokens maybe have a type/flag/something and analyzers only work on certain filters?
 
-bc. TokenChan -> invalid characters -> ascii? -> strip -> email -> lowercase -> stopword -> stemming -> ngram -> TokenChan
+bc. TokenChan -> email -> superstrip(invalid characters, ascii, strip, lowercase) -> stopword -> stemming -> double_metaphone -> ngram? -> TokenChan
 
 h3. Storage
 
