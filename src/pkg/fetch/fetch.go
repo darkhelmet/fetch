@@ -18,16 +18,45 @@ type Engine struct {
     storage storage.Engine
 }
 
+type FilterChain struct {
+    inc, outc tokenizer.TokenChan
+    filters []filter.Filter
+}
+
+func (fc *FilterChain) Close() {
+    close(fc.inc)
+    // TODO: Handle Cleanup() of filters
+}
+
+func (fc *FilterChain) Pump(tokens tokenizer.TokenChan) {
+    for token := range(tokens) {
+        fc.inc <- token
+    }
+}
+
 func buildChainAndTokenize(text string) tokenizer.TokenChan {
     st := simple.Build()
-    start, end := buildFilterChain("superstrip", "stopword", "stemmer")
+    chain := buildFilterChain("superstrip", "stopword", "stemmer")
     go func() {
-       for it := range(st.Tokenize(text)) {
-           start <- it
-       }
-       close(start)
+       chain.Pump(st.Tokenize(text))
+       chain.Close()
     }()
-    return end
+    return chain.outc
+}
+
+func buildFilterChain(names... string) (*FilterChain) {
+    var out tokenizer.TokenChan
+    chain := &FilterChain{
+        inc: make(tokenizer.TokenChan, 10),
+        filters: make([]filter.Filter, len(names)),
+    }
+    out = chain.inc
+    for index, name := range(names) {
+        chain.filters[index] = buildFilterFromName(name)
+        out = chain.filters[index].Process(out)
+    }
+    chain.outc = out
+    return chain
 }
 
 func buildFilterFromName(name string) filter.Filter {
@@ -40,16 +69,6 @@ func buildFilterFromName(name string) filter.Filter {
     case "stemmer": return stemmer.Build()
     }
     panic("Invalid filter")
-}
-
-func buildFilterChain(names... string) (in, out tokenizer.TokenChan) {
-    in = make(tokenizer.TokenChan, 10)
-    head := buildFilterFromName(names[0])
-    out = head.Process(in)
-    for _, name := range(names[1:]) {
-        out = buildFilterFromName(name).Process(out)
-    }
-    return in, out
 }
 
 func (e *Engine) Index(index, scope, id string, doc map[string]interface{}) {
