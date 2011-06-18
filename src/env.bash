@@ -13,6 +13,7 @@ PKGS="
   filter/superstrip
   filter/stopword
   filter/stemmer
+  filter/double_metaphone
   storage
   storage/redis
   fetch

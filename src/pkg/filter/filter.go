@@ -4,7 +4,7 @@ import (
     "fetch/tokenizer"
 )
 
-type FilterFunc func (t *tokenizer.Token) *tokenizer.Token
+type FilterFunc func (t *tokenizer.Token) []*tokenizer.Token
 type CleanupFunc func ()
 
 type Filter interface {
@@ -12,13 +12,12 @@ type Filter interface {
     Cleanup()
 }
 
-func StartFilter(inc tokenizer.TokenChan, f FilterFunc) tokenizer.TokenChan {
+func StartFilter(tokens tokenizer.TokenChan, f FilterFunc) tokenizer.TokenChan {
     outc := make(tokenizer.TokenChan, 10)
     go func() {
-        for token := range(inc) {
-            nt := f(token)
-            if nt != nil {
-                outc <- nt
+        for token := range(tokens) {
+            for _, newToken := range(f(token)) {
+                outc <- newToken
             }
         }
         close(outc)

@@ -11,12 +11,11 @@ var words = map[string]bool{"toward":true,"right":true,"everyone":true,"sometime
 type Stopword struct {}
 
 func (s *Stopword) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.StartFilter(in, func(t *tokenizer.Token) *tokenizer.Token {
-        // FIXME: Make it Skip() instead of returning nil
+    return filter.StartFilter(in, func(t *tokenizer.Token) []*tokenizer.Token {
         if words[t.Backing()] {
-            return nil
+            return []*tokenizer.Token{}
         }
-        return t
+        return []*tokenizer.Token{t}
     })
 }
 

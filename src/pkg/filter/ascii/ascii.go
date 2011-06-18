@@ -9,14 +9,15 @@ import (
 type Ascii struct {}
 
 func (a *Ascii) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.StartFilter(in, func(t *tokenizer.Token) *tokenizer.Token {
-        return tokenizer.NewToken(strings.Map(func(rune int) int {
+    return filter.StartFilter(in, func(t *tokenizer.Token) []*tokenizer.Token {
+        cleaned := strings.Map(func(rune int) int {
             // FIXME: Return Skip() or something
             if rune > 127 {
                 return -1
             }
             return rune
-        }, t.Backing()))
+        }, t.Backing())
+        return []*tokenizer.Token{tokenizer.NewToken(cleaned)}
     })
 }
 

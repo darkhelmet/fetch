@@ -8,6 +8,7 @@ import (
     "fetch/filter/superstrip"
     "fetch/filter/stopword"
     "fetch/filter/stemmer"
+    "fetch/filter/double_metaphone"
     "fetch/tokenizer"
     "fetch/tokenizer/simple"
     "fetch/storage"
@@ -36,7 +37,7 @@ func (fc *FilterChain) Pump(tokens tokenizer.TokenChan) {
 
 func buildChainAndTokenize(text string) tokenizer.TokenChan {
     st := simple.Build()
-    chain := buildFilterChain("superstrip", "stopword", "stemmer")
+    chain := buildFilterChain("superstrip", "stopword", "stemmer", "double_metaphone")
     go func() {
        chain.Pump(st.Tokenize(text))
        chain.Close()
@@ -67,6 +68,7 @@ func buildFilterFromName(name string) filter.Filter {
     case "superstrip": return superstrip.Build()
     case "stopword": return stopword.Build()
     case "stemmer": return stemmer.Build()
+    case "double_metaphone": return double_metaphone.Build()
     }
     panic("Invalid filter")
 }

@@ -14,12 +14,12 @@ type Stemmer struct {
 }
 
 func (s *Stemmer) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.StartFilter(in, func(t *tokenizer.Token) *tokenizer.Token {
+    return filter.StartFilter(in, func(t *tokenizer.Token) []*tokenizer.Token {
         str := t.Backing()
         cs := C.CString(str)
         defer C.free(unsafe.Pointer(cs))
         end := C.stem(s.cstemmer, cs, C.int(len(str) - 1)) + 1
-        return tokenizer.NewToken(str[0:end])
+        return []*tokenizer.Token{tokenizer.NewToken(str[0:end])}
     })
 }
 
