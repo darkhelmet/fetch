@@ -20,18 +20,18 @@ type Engine struct {
 }
 
 type FilterChain struct {
-    inc, outc tokenizer.TokenChan
+    input, output tokenizer.TokenChan
     filters []filter.Filter
 }
 
 func (fc *FilterChain) Close() {
-    close(fc.inc)
+    close(fc.input)
     // TODO: Handle Cleanup() of filters
 }
 
 func (fc *FilterChain) Pump(tokens tokenizer.TokenChan) {
     for token := range(tokens) {
-        fc.inc <- token
+        fc.input <- token
     }
 }
 
@@ -42,21 +42,21 @@ func buildChainAndTokenize(text string) tokenizer.TokenChan {
        chain.Pump(st.Tokenize(text))
        chain.Close()
     }()
-    return chain.outc
+    return chain.output
 }
 
 func buildFilterChain(names... string) (*FilterChain) {
-    var out tokenizer.TokenChan
+    var output tokenizer.TokenChan
     chain := &FilterChain{
-        inc: make(tokenizer.TokenChan, 10),
+        input: make(tokenizer.TokenChan, 10),
         filters: make([]filter.Filter, len(names)),
     }
-    out = chain.inc
+    output = chain.input
     for index, name := range(names) {
         chain.filters[index] = buildFilterFromName(name)
-        out = chain.filters[index].Process(out)
+        output = chain.filters[index].Process(output)
     }
-    chain.outc = out
+    chain.output = output
     return chain
 }
 
