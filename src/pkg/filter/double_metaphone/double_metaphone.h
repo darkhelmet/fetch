@@ -1,4 +1,13 @@
 /*
+Description:
+
+This module implements a "sounds like" algorithm developed
+by Lawrence Philips which he published in the June, 2000 issue
+of C/C++ Users Journal.  Double Metaphone is an improved
+version of Philips' original Metaphone algorithm.
+
+Copyright:
+
 Copyright 2000, Maurice Aubrey <maurice@hevanet.com>.
 All rights reserved.
 
@@ -30,6 +39,7 @@ typedef struct {
 void
 DoubleMetaphone(char *str, char **codes);
 	
+/* Added by Daniel Huckstep */
 struct dm_result {
     char * primary;
     char * secondary;
@@ -49,6 +59,7 @@ double_metaphone(char * input) {
     DoubleMetaphone(input, (char **) result);
     return result;
 }
+/* End Added by Daniel Huckstep */
 	
 metastring *
 NewMetaString(char *init_str)

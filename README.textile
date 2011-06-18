@@ -38,4 +38,6 @@ fetch is licensed under the terms of the Apache License, Version 2.0. See "LICEN
 
 fetch was created by Daniel Huckstep. Type @git shortlog -s@ for a full list of contributors.
 
-The Porter Stemming algorithm in @stemming.h@ is written by Martin Porter
+The Porter Stemming algorithm in @stemming.h@ is written by Martin Porter.
+
+The Double Metaphone algorithm in @double_metaphone.h@ is written by Maurice Aubrey and used with permission to "do what [I] want with it".
