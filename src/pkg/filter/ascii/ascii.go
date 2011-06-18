@@ -8,16 +8,15 @@ import (
 
 type Ascii struct {}
 
-func (a *Ascii) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.StartFilter(in, func(t *tokenizer.Token) []*tokenizer.Token {
+func (a *Ascii) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
+    return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {
         cleaned := strings.Map(func(rune int) int {
-            // FIXME: Return Skip() or something
             if rune > 127 {
                 return -1
             }
             return rune
-        }, t.Backing())
-        return []*tokenizer.Token{tokenizer.NewToken(cleaned)}
+        }, token.Backing())
+        output <- tokenizer.NewToken(cleaned)
     })
 }
 

@@ -8,8 +8,8 @@ import (
 
 type Punctuation struct {}
 
-func (p *Punctuation) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.StartFilter(in, func(t *tokenizer.Token) []*tokenizer.Token {
+func (p *Punctuation) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
+    return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {
         cleaned := strings.Map(func(rune int) int {
             switch {
             case 48 <= rune && rune <= 57: // numbers
@@ -20,8 +20,8 @@ func (p *Punctuation) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
                 return rune
             }
             return -1
-        }, t.Backing())
-        return []*tokenizer.Token{tokenizer.NewToken(cleaned)}
+        }, token.Backing())
+        output <- tokenizer.NewToken(cleaned)
     })
 }
 

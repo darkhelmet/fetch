@@ -13,13 +13,13 @@ type Stemmer struct {
     cstemmer *C.struct_stemmer
 }
 
-func (s *Stemmer) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.StartFilter(in, func(t *tokenizer.Token) []*tokenizer.Token {
-        str := t.Backing()
+func (s *Stemmer) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
+    return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {
+        str := token.Backing()
         cs := C.CString(str)
         defer C.free(unsafe.Pointer(cs))
         end := C.stem(s.cstemmer, cs, C.int(len(str) - 1)) + 1
-        return []*tokenizer.Token{tokenizer.NewToken(str[0:end])}
+        output <- tokenizer.NewToken(str[0:end])
     })
 }
 

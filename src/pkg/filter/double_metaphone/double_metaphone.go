@@ -14,18 +14,17 @@ import (
 
 type DoubleMetaphone struct {}
 
-// FIXME: Not so many mallocs, plz
-func (dm *DoubleMetaphone) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.StartFilter(in, func(t *tokenizer.Token) []*tokenizer.Token {
-        cs := C.CString(t.Backing())
+func (dm *DoubleMetaphone) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
+    return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {
+        cs := C.CString(token.Backing())
         defer C.free(unsafe.Pointer(cs))
         codes := C.double_metaphone(cs)
         primary, secondary := C.GoString(codes.primary), C.GoString(codes.secondary)
         defer C.free_dm_result(codes)
-        if primary == secondary {
-            return []*tokenizer.Token{tokenizer.NewToken(primary)}
+        output <- tokenizer.NewToken(primary)
+        if primary != secondary {
+            output <- tokenizer.NewToken(secondary)
         }
-        return []*tokenizer.Token{tokenizer.NewToken(primary), tokenizer.NewToken(secondary)}
     })
 }
 

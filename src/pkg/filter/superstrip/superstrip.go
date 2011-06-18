@@ -9,8 +9,8 @@ import (
 type Superstrip struct {}
 
 // Handle ascii, lowercase, and stripping punctuation in one filter
-func (s *Superstrip) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
-    return filter.StartFilter(in, func(t *tokenizer.Token) []*tokenizer.Token {
+func (s *Superstrip) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
+    return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {
         cleaned := strings.Map(func(rune int) int {
             switch {
             case 48 <= rune && rune <= 57: // numbers
@@ -21,8 +21,8 @@ func (s *Superstrip) Process(in tokenizer.TokenChan) tokenizer.TokenChan {
                 return rune
             }
             return -1
-        }, t.Backing())
-        return []*tokenizer.Token{tokenizer.NewToken(cleaned)}
+        }, token.Backing())
+        output <- tokenizer.NewToken(cleaned)
     })
 }
 
