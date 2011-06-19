@@ -4,3 +4,5 @@ src/cmd/fetchd/fetchd
 *.o
 _obj/
 _cgo*
+*.out
+_testmain.go
