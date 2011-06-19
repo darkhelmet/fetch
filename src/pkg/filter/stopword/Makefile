@@ -1,6 +1,6 @@
 include $(GOROOT)/src/Make.inc
 
 TARG=fetch/filter/stopword
-GOFILES=$(wildcard *.go)
+GOFILES=stopword.go
 
 include $(GOROOT)/src/Make.pkg
