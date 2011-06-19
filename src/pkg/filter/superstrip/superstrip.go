@@ -22,7 +22,9 @@ func (s *Superstrip) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
             }
             return -1
         }, token.Backing())
-        output <- tokenizer.NewToken(cleaned)
+        if cleaned != "" {
+            output <- tokenizer.NewToken(cleaned)
+        }
     })
 }
 
