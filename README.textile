@@ -34,7 +34,18 @@ TODO
 
 h2. Hacking
 
-* Install "gospec":https://github.com/orfjackal/gospec
+# Install "gospec":https://github.com/orfjackal/gospec
+# Install "git-flow":https://github.com/nvie/gitflow
+# Fork the repo, clone, and run @./setup.bash@
+# Use @git-flow@ to start a feature: @git flow feature start my-feature@
+# Write code and tests
+# Stage files (so @git ls-files@ picks them up) and run @./src/format.bash@ to format your source files according to @gotfmt@ and my settings. *DO THIS BEFORE COMMITTING.*
+# Commit
+# Repeat previous steps 5-7 until feature is complete.
+# Use @git-flow@ to finish the feature: @git flow feature finish my-feature@
+# Send a pull request.
+
+The most important parts are tests and @gofmt@. If you don't have tests, or didn't run the formatting script, I'll tell you to go do that. If you continually ignore this hacking workflow, I'll start to continually ignore your pull requests!
 
 h2. License and Authors
 
