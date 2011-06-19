@@ -41,7 +41,7 @@ h2. Hacking
 # Write code and tests
 # Stage files (so @git ls-files@ picks them up) and run @./src/format.bash@ to format your source files according to @gotfmt@ and my settings. *DO THIS BEFORE COMMITTING.*
 # Commit
-# Repeat previous steps 5-7 until feature is complete.
+# Repeat steps 5-7 until feature is complete.
 # Use @git-flow@ to finish the feature: @git flow feature finish my-feature@
 # Send a pull request.
 
