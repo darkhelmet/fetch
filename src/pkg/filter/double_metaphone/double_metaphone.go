@@ -12,7 +12,7 @@ import (
     "fetch/tokenizer"
 )
 
-type DoubleMetaphone struct {}
+type DoubleMetaphone struct{}
 
 func (dm *DoubleMetaphone) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
     return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {

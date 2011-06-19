@@ -6,7 +6,7 @@ import (
     "fetch/tokenizer"
 )
 
-type Superstrip struct {}
+type Superstrip struct{}
 
 // Handle ascii, lowercase, and stripping punctuation in one filter
 func (s *Superstrip) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
@@ -21,7 +21,7 @@ func (s *Superstrip) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
                 return rune + 32 // Make lowercase
             }
             return -1
-        }, token.Backing())
+        },token.Backing())
         if cleaned != "" {
             output <- tokenizer.NewToken(cleaned)
         }

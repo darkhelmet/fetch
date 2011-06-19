@@ -11,7 +11,7 @@ import (
 
 func printResults(ids chan string) {
     fmt.Println("results")
-    for id := range(ids) {
+    for id := range ids {
         fmt.Println(id)
     }
 }

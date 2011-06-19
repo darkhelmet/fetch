@@ -18,7 +18,7 @@ func (s *Stemmer) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
         str := token.Backing()
         cs := C.CString(str)
         defer C.free(unsafe.Pointer(cs))
-        end := C.stem(s.cstemmer, cs, C.int(len(str) - 1)) + 1
+        end := C.stem(s.cstemmer, cs, C.int(len(str)-1)) + 1
         output <- tokenizer.NewToken(str[0:end])
     })
 }
@@ -28,5 +28,5 @@ func (s *Stemmer) Cleanup() {
 }
 
 func Build() *Stemmer {
-    return &Stemmer{ cstemmer: C.create_stemmer() }
+    return &Stemmer{cstemmer: C.create_stemmer()}
 }
