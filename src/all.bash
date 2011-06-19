@@ -39,6 +39,8 @@ for cmd in $CMDS
 do mk cmd/$cmd
 done
 
-for pkg in $PKGS
-do tst pkg/$pkg
-done
+if [ "$1" == "test" ]; then
+    for pkg in $PKGS
+    do tst pkg/$pkg
+    done
+fi
