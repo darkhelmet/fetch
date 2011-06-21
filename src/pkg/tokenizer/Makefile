@@ -1,6 +1,7 @@
 include $(GOROOT)/src/Make.inc
 
 TARG=fetch/tokenizer
-GOFILES=$(wildcard *.go)
+GOFILES=token.go\
+		tokenizer.go
 
 include $(GOROOT)/src/Make.pkg
