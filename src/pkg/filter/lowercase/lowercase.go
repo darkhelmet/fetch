@@ -6,7 +6,7 @@ import (
     "fetch/tokenizer"
 )
 
-type Lowercase struct {}
+type Lowercase struct{}
 
 func (l *Lowercase) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
     return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {

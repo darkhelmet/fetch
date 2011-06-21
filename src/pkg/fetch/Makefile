@@ -1,6 +1,6 @@
 include $(GOROOT)/src/Make.inc
 
 TARG=fetch
-GOFILES=$(wildcard *.go)
+GOFILES=fetch.go
 
 include $(GOROOT)/src/Make.pkg

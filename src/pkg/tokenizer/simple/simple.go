@@ -5,7 +5,7 @@ import (
     "strings"
 )
 
-type SimpleTokenizer struct {}
+type SimpleTokenizer struct{}
 
 func (st *SimpleTokenizer) Tokenize(input string) tokenizer.TokenChan {
     return tokenizer.NewTokenChan(strings.Fields(input))

@@ -20,6 +20,13 @@ mk() {
     cd "$d"
 }
 
+tst() {
+    d=$PWD
+    xcd $1
+    gotest
+    cd "$d"
+}
+
 for req in $PKG_REQS
 do goinstall $req
 done
@@ -31,3 +38,9 @@ done
 for cmd in $CMDS
 do mk cmd/$cmd
 done
+
+if [ "$1" == "test" ]; then
+    for pkg in $PKGS
+    do tst pkg/$pkg
+    done
+fi

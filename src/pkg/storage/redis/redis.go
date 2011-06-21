@@ -17,7 +17,7 @@ func buildKey(index, scope, field string, token *tokenizer.Token) string {
 
 func (r *Redis) getSetKeys(index, scope, field string, tc tokenizer.TokenChan) (keys vector.Vector) {
     var ts vector.Vector
-    for token := range(tc) {
+    for token := range tc {
         ts.Push(buildKey(index, scope, field, token))
     }
     rs := r.redis.Command("keys", ts...)
@@ -28,19 +28,19 @@ func (r *Redis) getSetKeys(index, scope, field string, tc tokenizer.TokenChan) (
 }
 
 func pumpValues(rs *rdc.ResultSet) chan string {
-    out := make(chan string, 10)
+    output := make(chan string, 10)
     go func() {
-       rs.ValuesDo(func(rv rdc.ResultValue) {
-           out <- rv.String()
-       })
-       close(out)
+        rs.ValuesDo(func(rv rdc.ResultValue) {
+            output <- rv.String()
+        })
+        close(output)
     }()
-    return out
+    return output
 }
 
 func (r *Redis) Store(index, scope, id, field string, tc tokenizer.TokenChan) bool {
     return r.redis.MultiCommand(func(mc *rdc.MultiCommand) {
-        for token := range(tc) {
+        for token := range tc {
             mc.Command("sadd", buildKey(index, scope, field, token), id)
         }
     }).IsOK()
@@ -56,5 +56,5 @@ func (r *Redis) SearchScope(index, scope string, tc tokenizer.TokenChan) chan st
 }
 
 func Build() (r *Redis) {
-    return &Redis{ redis: rdc.NewRedisDatabase(rdc.Configuration{}) }
+    return &Redis{redis: rdc.NewRedisDatabase(rdc.Configuration{})}
 }

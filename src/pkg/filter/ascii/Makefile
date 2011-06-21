@@ -1,6 +1,6 @@
 include $(GOROOT)/src/Make.inc
 
 TARG=fetch/filter/ascii
-GOFILES=$(wildcard *.go)
+GOFILES=ascii.go
 
 include $(GOROOT)/src/Make.pkg

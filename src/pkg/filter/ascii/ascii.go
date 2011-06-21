@@ -6,7 +6,7 @@ import (
     "fetch/tokenizer"
 )
 
-type Ascii struct {}
+type Ascii struct{}
 
 func (a *Ascii) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
     return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {
@@ -15,7 +15,7 @@ func (a *Ascii) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
                 return -1
             }
             return rune
-        }, token.Backing())
+        },token.Backing())
         output <- tokenizer.NewToken(cleaned)
     })
 }

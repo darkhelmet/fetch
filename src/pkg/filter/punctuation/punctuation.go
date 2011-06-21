@@ -6,7 +6,7 @@ import (
     "fetch/tokenizer"
 )
 
-type Punctuation struct {}
+type Punctuation struct{}
 
 func (p *Punctuation) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
     return filter.StartFilter(input, func(token *tokenizer.Token, output tokenizer.TokenChan) {
@@ -20,7 +20,7 @@ func (p *Punctuation) Process(input tokenizer.TokenChan) tokenizer.TokenChan {
                 return rune
             }
             return -1
-        }, token.Backing())
+        },token.Backing())
         output <- tokenizer.NewToken(cleaned)
     })
 }
