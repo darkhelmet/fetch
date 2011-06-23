@@ -1,6 +1,7 @@
 package fetch
 
 import (
+    "fmt"
     "fetch/filter"
     "fetch/filter/ascii"
     "fetch/filter/punctuation"
@@ -77,7 +78,7 @@ func buildFilterFromName(name string) filter.Filter {
     case "double_metaphone":
         return double_metaphone.Build()
     }
-    panic("Invalid filter")
+    panic(fmt.Sprintf("Invalid filter %s provided", name))
 }
 
 func (e *Engine) Index(index, scope, id string, doc map[string]interface{}) {
