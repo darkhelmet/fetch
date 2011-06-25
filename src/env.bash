@@ -1,6 +1,7 @@
 PKG_REQS="
   tideland-cgl.googlecode.com/hg
   tideland-rdc.googlecode.com/hg
+  github.com/darkhelmet/web.go
 "
 
 PKGS="
@@ -16,7 +17,9 @@ PKGS="
   filter/double_metaphone
   storage
   storage/redis
+  config
   fetch
+  web
 "
 
 CMDS="
