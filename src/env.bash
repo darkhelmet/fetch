@@ -19,6 +19,7 @@ PKGS="
   storage/redis
   config
   fetch
+  web
 "
 
 CMDS="

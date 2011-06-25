@@ -46,6 +46,11 @@ func (r *Redis) Store(index, scope, id, field string, tc tokenizer.TokenChan) bo
     }).IsOK()
 }
 
+func (r *Redis) Delete(index, scope, id string) bool {
+    panic("TODO: Implement")
+    return false
+}
+
 func (r *Redis) SearchField(index, scope, field string, tc tokenizer.TokenChan) chan string {
     keys := r.getSetKeys(index, scope, field, tc)
     return pumpValues(r.redis.Command("sinter", keys...))

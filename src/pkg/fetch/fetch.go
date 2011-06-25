@@ -89,8 +89,8 @@ func (e *Engine) Index(index, scope, id string, doc map[string]interface{}) {
     }
 }
 
-func (e *Engine) SearchField(index, scope, field, query string) chan string {
-    return e.storage.SearchField(index, scope, field, buildChainAndTokenize(query))
+func (e *Engine) Delete(index, scope, id string) bool {
+    return e.storage.Delete(index, scope, id)
 }
 
 func (e *Engine) SearchScope(index, scope, query string) chan string {
