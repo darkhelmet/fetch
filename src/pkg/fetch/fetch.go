@@ -16,6 +16,8 @@ import (
     "fetch/storage/redis"
 )
 
+const Version = "0.0.1"
+
 type Engine struct {
     storage storage.Engine
 }
