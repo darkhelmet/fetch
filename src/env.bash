@@ -5,6 +5,7 @@ PKG_REQS="
 "
 
 PKGS="
+  config
   tokenizer
   tokenizer/simple
   filter
@@ -17,7 +18,6 @@ PKGS="
   filter/double_metaphone
   storage
   storage/redis
-  config
   fetch
   web
 "
