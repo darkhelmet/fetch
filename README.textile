@@ -30,7 +30,8 @@ storage.Search(index, scope, query) # -> List of ids
 
 h2. Quick start
 
-TODO
+* "Install go":http://golang.org/doc/install.html (In the _Fetch the repository_ step, use *weekly* instead of *release*)
+* Run @./all.bash@ from the @src@ directory
 
 h2. Hacking
 

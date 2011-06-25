@@ -1,6 +1,7 @@
 package fetch
 
 import (
+    "fmt"
     "fetch/filter"
     "fetch/filter/ascii"
     "fetch/filter/punctuation"
@@ -14,6 +15,8 @@ import (
     "fetch/storage"
     "fetch/storage/redis"
 )
+
+const Version = "0.0.1"
 
 type Engine struct {
     storage storage.Engine
@@ -77,7 +80,7 @@ func buildFilterFromName(name string) filter.Filter {
     case "double_metaphone":
         return double_metaphone.Build()
     }
-    panic("Invalid filter")
+    panic(fmt.Sprintf("Invalid filter %s provided", name))
 }
 
 func (e *Engine) Index(index, scope, id string, doc map[string]interface{}) {
@@ -88,8 +91,8 @@ func (e *Engine) Index(index, scope, id string, doc map[string]interface{}) {
     }
 }
 
-func (e *Engine) SearchField(index, scope, field, query string) chan string {
-    return e.storage.SearchField(index, scope, field, buildChainAndTokenize(query))
+func (e *Engine) Delete(index, scope, id string) bool {
+    return e.storage.Delete(index, scope, id)
 }
 
 func (e *Engine) SearchScope(index, scope, query string) chan string {
