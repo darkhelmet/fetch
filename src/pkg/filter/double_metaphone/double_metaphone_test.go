@@ -25,4 +25,10 @@ func DoubleMetaphoneSpec(c gospec.Context) {
             c.Expect((<-channel(original)).Backing(), Equals, stemmed)
         })
     }
+
+    c.Specify("Should return 2 different encodings for Schmidt", func() {
+        ch := channel("Schmidt")
+        c.Expect((<-ch).Backing(), Equals, "XMT")
+        c.Expect((<-ch).Backing(), Equals, "SMT")
+    })
 }
