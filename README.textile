@@ -33,6 +33,10 @@ h2. Quick start
 * "Install go":http://golang.org/doc/install.html (In the _Fetch the repository_ step, use *weekly* instead of *release*)
 * Run @./all.bash@ from the @src@ directory
 
+h2. Bugs
+
+Submit bugs at my "FogBugz":https://darkhax.fogbugz.com/default.asp?pg=pgPublicEdit
+
 h2. Hacking
 
 # Install "gospec":https://github.com/orfjackal/gospec
